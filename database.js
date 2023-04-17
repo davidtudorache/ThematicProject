@@ -35,7 +35,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                     return crypto.pbkdf2Sync(password, salt, 100000, 256, 'sha256').toString('hex');
                 };
 
-                const INSERT = 'INSERT INTO users (user_name, email, password, salt) VALUES (?,?,?,?,?)'
+                const INSERT = 'INSERT INTO users (user_name, email, password, salt) VALUES (?,?,?,?)'
                 const salt = crypto.randomBytes(64);
                 const hash = getHash(ADMIN_PASSWORD, salt);
 
@@ -56,8 +56,14 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                     FOREIGN KEY(created_by) REFERENCES users(user_id)
                 )`,
             (err) => {
-                if(err){
-                    console.log("Players table already created")
+                if(err ==404){
+                    console.log("404")
+                }else if(err==401){
+                    console.log("401")
+                }else if (err==500){
+                    console.log("500")
+                }else if (err==400){
+                    console.log("400")
                 }else{
                     console.log("Players table created")
                 }
