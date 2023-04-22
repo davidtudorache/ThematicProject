@@ -16,10 +16,10 @@ module.exports = function(app){
     
 
     app.route("/login")
-        .post(); //login
+        .post(users.login); //login
 
     app.route("/logout")
-        .post(); //logout
+        .post(users.logout); //logout
 
 
 

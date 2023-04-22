@@ -69,10 +69,54 @@ const removeToken = (token, done) => {
 const setToken = (id, done) => {
     let token = crypto.randomBytes(16).toString("hex"); //Generates token 
 
-    const sql = "UPDATE users SET session_token=? WHERE user_id=?"  //adds token into users record
+    const sql = "UPDATE users SET session_token=? WHERE user_id=?"  //adds token into users table
 
     db.run(sql, [token, id], (err) => {
         return done(err, token)
+    })
+}
+
+const getIdFromToken = (token, done) => {
+    const sql = "SELECT user_id FROM users WHERE session_token=?"
+    
+
+    db.get(sql, [token], (err,row) => { //Executes SQL query
+        if(err) return done(err)
+        if(!row) return done(404)
+
+        return done(err, row.user_id); //returns userid
+})
+}
+
+const getToken = (id, done) => {  //Gets existing token
+    const sql = "SELECT session_token FROM users WHERE user_id =?"   
+
+    db.get(sql, [id], (err,row) => { //Executes SQL
+        if(err) return done(err)
+        if(!row) return done(404)
+
+        return done(err, row.session_token);
+    
+    })
+}
+
+const authenticateUser = (email, password, done) => {
+    const sql = "SELECT user_id, password, salt FROM users WHERE email=?"
+
+    db.get(sql, [email], (err,row) => {
+        if(err) return done(err)
+        if(!row) return done(404) //Incorrect Email
+
+        if(row.salt === null) row.salt = ""
+
+        let salt = Buffer.from(row.salt, "hex")
+
+        if(row.password === getHash(password,salt)){
+            return done(false, row.user_id)  //Correct Password
+        }
+        else{
+            return done(404)  //Incorrect Password
+        }
     })
 }
 
@@ -81,5 +125,9 @@ const setToken = (id, done) => {
         getAllUsers: getAllUsers,
         addNewUser: addNewUser,
         setToken: setToken,
-        removeToken: removeToken
+        removeToken: removeToken,
+        getOne: getOne,
+        getIdFromToken: getIdFromToken,
+        getToken: getToken,
+        authenticateUser: authenticateUser
     }
