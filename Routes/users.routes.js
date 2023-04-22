@@ -12,7 +12,7 @@ module.exports = function(app){
 
 
     app.route("/user/:user_id")
-        .get(); //Get One User
+        .get(users.getOne); //Get One User
     
 
     app.route("/login")
