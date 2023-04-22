@@ -1,5 +1,5 @@
 const db = require("../database.js");
-const crypto = require("crypto")
+crypto = require("crypto")
 
 
 const getAllUsers = (done) => {
@@ -56,7 +56,7 @@ const getAllUsers = (done) => {
 
   const getHash = function(password,salt){
     return crypto.pbkdf2Sync(password, salt, 100000,256, "sha256").toString("hex");
-   }
+}
 
 const removeToken = (token, done) => {
     const sql = "UPDATE users SET session_token=null WHERE session_token=?"
