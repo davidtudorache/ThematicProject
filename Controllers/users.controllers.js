@@ -19,8 +19,7 @@ const addNew = (req, res) => {
     const { error } = schema.validate(req.body); //Validates incoming request
     if(error) return res.status(400).send(error.details[0].message);
 
-    let user = Object.assign({},req.body)
-
+    let user = Object.assign({}, req.body);
     users.addNewUser(user, (err, id) => {
         if(err) return res.sendStatus(500) //Fail
 

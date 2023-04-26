@@ -1,5 +1,5 @@
 const users = require("../Controllers/users.controllers");
-
+const authentication = require("../lib/authentication.js")
 
 
 module.exports = function(app){
@@ -7,8 +7,7 @@ module.exports = function(app){
     
     app.route("/user")
         .get(users.getAll) //Get All users
-        .patch() //Update User (May be unneeded)
-        .post(users.addNew) //add new user
+        .post(authentication.isAuthenticated,users.addNew) //add new user
 
 
     app.route("/user/:user_id")
@@ -19,7 +18,7 @@ module.exports = function(app){
         .post(users.login); //login
 
     app.route("/logout")
-        .post(users.logout); //logout
+        .post(authentication.isAuthenticated, users.logout); //logout
 
 
 

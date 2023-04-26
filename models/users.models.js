@@ -24,11 +24,11 @@ const getAllUsers = (done) => {
     }
 
 
- const addNewUser = (user, done) => {    //Creates New User
+ const addNewUser = (user, done) => {  //Creates New User
     const salt = crypto.randomBytes(64);     //Adds salt and hashes password
     const hash = getHash(user.password, salt);
     
-        const sql = "INSERT INTO users (user_name, email, password, salt) VALUES (?,?,?,?,?)"
+        const sql = "INSERT INTO users (user_name, email, password, salt) VALUES (?,?,?,?)"
         let values = [user.user_name, user.email, hash, salt.toString("hex")];   //Adds values to query
     
         db.run(sql, values, function(err) {  //executes SQL query
