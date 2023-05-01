@@ -121,6 +121,17 @@ const authenticateUser = (email, password, done) => {
 }
 
 
+const addNewPlayer = (player,done) => {
+    const sql = "INSERT INTO players (player_name, player_wins, player_losses, player_rank, created_by) VALUES (?,?,?,?,0)"
+        let values = [player.player_name, 0, 0,0,getIdFromToken(player.token)];   //Adds values to query
+    
+        db.run(sql, values, function(err) {  //executes SQL query
+            if(err) return done(err)
+    
+            return done(null,this.lastID); //returns player id - success
+        })
+}
+
     module.exports = {
         getAllUsers: getAllUsers,
         addNewUser: addNewUser,
@@ -129,5 +140,6 @@ const authenticateUser = (email, password, done) => {
         getOne: getOne,
         getIdFromToken: getIdFromToken,
         getToken: getToken,
-        authenticateUser: authenticateUser
+        authenticateUser: authenticateUser,
+        addNewPlayer:addNewPlayer
     }

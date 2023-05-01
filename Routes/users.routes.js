@@ -20,6 +20,7 @@ module.exports = function(app){
     app.route("/logout")
         .post(authentication.isAuthenticated, users.logout); //logout
 
-
+    app.route("/player")
+        .post() //creates player
 
 }

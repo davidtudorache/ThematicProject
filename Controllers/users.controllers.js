@@ -80,6 +80,24 @@ const logout = (req,res) => { //Deletes token to logout
     })
  }
 
+ const addNewPlayer = (req, res) => {
+    let token = req.get("X-Authorization")
+    const schema = Joi.object({
+        "user_name": Joi.string().required(),
+    })
+    const { error } = schema.validate(req.body); //Validates incoming request
+    if(error) return res.status(400).send(error.details[0].message);
+
+    let player = Object.assign({}, req.body + token);
+    users.addNewPlayer(player, (err, id) => {
+        if(err) return res.sendStatus(500) //Fail
+
+        return res.status(201).send({user_id: id})
+    })
+}
+
+
+
 
 module.exports = {
     getAll: getAll,
