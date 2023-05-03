@@ -3,7 +3,11 @@ const Joi = require("joi");
 
 
 const getAll = (req,res) => {
-   
+   matches.getAll((err,num_rows,results) => {
+    if(err) return res.sendStatus(500);
+
+    return res.status(200).send(results)
+   })
 }
 
 
@@ -33,12 +37,52 @@ const addNew = (req,res) => {
 
         return res.status(201).send({match_id: id}) //Success
     })
-
 }
+
+const updateMatch = (req,res) => {
+    let match_id = parseInt(req.params.match_id); //Gets Match ID
+    matches.getOne(match_id, (err,result) => {     //Checks Match Exists before Updating
+        if(err === 404) return res.sendStatus(404)
+        if(err) return res.sendStatus(500);
+
+        const schema = Joi.object({
+            "participant_score": Joi.number(),
+            "competitor_score": Joi.number(),
+            "winner_name": Joi.string()
+        })
+
+        const { error } = schema.validate(req.body);
+        if(error) return res.status(400).send(error.details[0])
+
+
+        if (req.body.hasOwnProperty("participant_score")){
+            match.participant_score = req.body.participant_score
+        }
+
+        if (req.body.hasOwnProperty("competitor_score")) {
+            match.competitor_score = req.body.participant_score
+        }
+
+        if (req.body.hasOwnProperty("winner_name")) {
+            match.winner_name = req.body.winner_name
+        }
+
+        matches.updateMatch(match_id,match, (err,id) => {
+            if(err) {
+                console.log(err)
+                return res.sendStatus(500) //Fail
+            }
+
+            return res.sendStatus(500) //Success
+        })
+    })
+}
+
 
 module.exports = {
     getAll: getAll,
     getOne: getOne,
-    addNew: addNew
+    addNew: addNew,
+    updateMatch: updateMatch
 
 }

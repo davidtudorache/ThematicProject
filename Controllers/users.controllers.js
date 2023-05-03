@@ -104,6 +104,7 @@ module.exports = {
     getOne: getOne,
     addNew: addNew,
     login: login,
-    logout: logout
+    logout: logout,
+    addNewPlayer: addNewPlayer
 
 } 

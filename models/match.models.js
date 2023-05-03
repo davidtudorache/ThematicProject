@@ -27,6 +27,9 @@ const getAll = (id, done) => {              //Gets All from ONE tournament
             results.push({
                match_id: row.match_id,
                match_no: row.match_no,
+               participant_score: row.participant_score,
+               competitor_score: row.competitor_score,
+               winner_name: row.winner_name
                
             });
         },
@@ -54,8 +57,13 @@ const getOne = (id, done) => {
         })
 }
 
-const updateMatch = (match, done) => {
+const updateMatch = (id,match, done) => {
+    const sql = "UPDATE users SET participant_score=?, competitor_score=?, winner_name=? WHERE match_id = ?"
+    let values = [match.participant_score,match.competitor_score,match.winner_name,id];
 
+    db.run(sql,values, (err) => {
+        return done(err)
+    })
 }
 
 
