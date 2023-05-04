@@ -28,3 +28,4 @@ app.get("/db", (req,res) => {
 
 //Endpoints
 require("./Routes/users.routes")(app);
+require("./Routes/match.routes.js")(app);
