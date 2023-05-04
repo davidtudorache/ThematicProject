@@ -16,27 +16,21 @@ const addNew = (match,done) => {
 }
 
 const getAll = (id, done) => {              //Gets All from ONE tournament 
-    const results =[];
+    const sql = "SELECT * FROM match WHERE tournament_id = ?"
 
-    db.each(
-        "SELECT * FROM match",
-        [],
-        (err, row) => {
-            if(err) console.log("Something went wrong: " + err);
+        db.get(sql,[id], (err,row) => {
+            if(err) return done(err)
+            if(!row) return done(404)
 
-            results.push({
-               match_id: row.match_id,
-               match_no: row.match_no,
-               participant_score: row.participant_score,
-               competitor_score: row.competitor_score,
-               winner_name: row.winner_name
-               
-            });
-        },
-        (err, num_rows) => {
-            return done(err, num_rows, results);
-        }
-    )
+
+            return done(null, {
+                match_id: row.match_id,
+                match_no: row.match_no,
+                participant_score: row.match_no,
+                competitor_score: row.competitor_score,
+                winner_name: row.winner_name
+            })
+        })
 }
 
 
@@ -73,3 +67,5 @@ module.exports = {
     getOne: getOne,
     updateMatch: updateMatch
 }
+
+

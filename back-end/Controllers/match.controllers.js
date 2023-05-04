@@ -73,7 +73,7 @@ const updateMatch = (req,res) => {
                 return res.sendStatus(500) //Fail
             }
 
-            return res.sendStatus(500) //Success
+            return res.sendStatus(200) //Success
         })
     })
 }

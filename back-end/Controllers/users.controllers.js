@@ -6,6 +6,7 @@ const getAll =(req,res) => {
         if(err) return res.sendStatus(500);
 
         return res.status(200).send(results);
+   
     })
 }
 
