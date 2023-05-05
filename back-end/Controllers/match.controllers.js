@@ -31,6 +31,7 @@ const addNew = (req,res) => {
     })
 
     const { error } = schema.validate(req.body);
+    console.log(error);
     if(error) return res.status(400).send(error.details[0].message);
 
     let match = Object.assign({}, req.body);
@@ -51,10 +52,9 @@ const updateMatch = (req,res) => {
 
         const schema = Joi.object({
             "participant_score": Joi.number().required(),
-            "competitor_score": Joi.number().required(),
-            "winner_name": Joi.string().required()
+            "competitor_score": Joi.number().required()
         })
-
+        console.log(req.body);
         const { error } = schema.validate(req.body);
         if(error) return res.status(400).send(error.details[0])
 
@@ -67,9 +67,6 @@ const updateMatch = (req,res) => {
             match.competitor_score = req.body.competitor_score
         }
 
-        if (req.body.hasOwnProperty("winner_name")) {
-            match.winner_name = req.body.winner_name
-        }
 
         matches.updateMatch(match_id,match, (err,id) => {
             if(err) {

@@ -56,8 +56,8 @@ const getOne = (id, done) => {
 }
 
 const updateMatch = (id,match, done) => {
-    const sql = "UPDATE match SET participant_score=?, competitor_score=?, winner_name=? WHERE match_id = ?"
-    let values = [match.participant_score,match.competitor_score,match.winner_name,id];
+    const sql = "UPDATE match SET participant_score=?, competitor_score=? WHERE match_id = ?"
+    let values = [match.participant_score,match.competitor_score,id];
 
     db.run(sql,values, (err) => {
         return done(err)

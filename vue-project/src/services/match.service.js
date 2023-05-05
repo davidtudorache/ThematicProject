@@ -23,7 +23,7 @@ const createMatch = (data) => {
 }
 
 const updateMatch = (match_id, data) => {
-    return fetch("http://localhost:3333/match/" + match_id, {
+    return fetch("http://localhost:3000/match/" + match_id, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const updateMatch = (match_id, data) => {
 }
 
 const getAllMatches = (tournament_id) => {
-    return fetch("http://localhost:3333/matchlist/" + tournament_id)
+    return fetch("http://localhost:3000/matchlist/" + tournament_id)
     .then((response) => {
         if(response.status === 200){
             return response.json();
@@ -65,7 +65,7 @@ const getAllMatches = (tournament_id) => {
 }
 
 const getOneMatch = (match_id) => {
-    return fetch("http://localhost:3333/match/" + match_id)
+    return fetch("http://localhost:3000/match/" + match_id)
     .then((response) => {
         if(response.status === 200){
             return response.json();

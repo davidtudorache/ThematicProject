@@ -22,7 +22,7 @@
     <ul v-if="tournaments.length">
         <li v-for="tournament in tournaments" :key="tournament.tournament_id">
             <router-link :to="'/tournament/' + tournament.tournament_id">
-                {{ tournament.name + ' for ' + tournament.game }}
+                {{ tournament.tournament_name + ' on ' + tournament.tournament_game }}
             </router-link>
         </li>
     </ul>
@@ -41,7 +41,6 @@
                 tournaments: [],
                 error: "",
                 loading: true,
-                session_token: localStorage.getItem("session_token"),
                 name: "",
                 game: "",
                 host: "",
@@ -50,7 +49,7 @@
             }
         },
         mounted() {
-            tournamentService.getAllTournaments
+            tournamentService.getAllTournaments()
             .then(tournaments => {
                 this.tournaments = tournaments
                 this.loading = false
@@ -61,7 +60,7 @@
             handleSubmit(e){
                 const {name, game, host, player_id, user_id} = this
 
-                if(!(title && text && author)){
+                if(!(name && game && host)){
                     return;
                 }
 
@@ -73,10 +72,10 @@
                     "user_id": user_id
                 }
 
-                tournamentService.create(data)
+                tournamentService.createTournament(data)
                 .then(result => {
                     console.log("tournament created")
-                    tournamentService.getAll()
+                    tournamentService.getAllTournaments()
                     .then(tournaments => {
                         this.tournaments = tournaments
                         this.loading = false

@@ -1,5 +1,5 @@
 const createTournament = (data) => {
-    return fetch("http://localhost:3333/tournament", {
+    return fetch("http://localhost:3000/tournament", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ const createTournament = (data) => {
 }
 
 const getAllTournaments = () => {
-    return fetch("http://localhost:3333/tournament")
+    return fetch("http://localhost:3000/tournament")
     .then((response) => {
         if(response.status === 200){
             return response.json();
@@ -43,7 +43,7 @@ const getAllTournaments = () => {
 }
 
 const getOneTournament = (tournament_id) => {
-    return fetch("http://localhost:3333/tournament/" + tournament_id)
+    return fetch("http://localhost:3000/tournament/" + tournament_id)
     .then((response) => {
         if(response.status === 200){
             return response.json();
@@ -61,7 +61,7 @@ const getOneTournament = (tournament_id) => {
 }
 
 const updateTournament = (tournament_id, data) => {
-    return fetch("http://localhost:3333/tournament/" + tournament_id, {
+    return fetch("http://localhost:3000/tournament/" + tournament_id, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const updateTournament = (tournament_id, data) => {
 }
 
 const deleteTournament = (tournament_id) => {
-    return fetch("http://localhost:3333/tournament/" + tournament_id, {
+    return fetch("http://localhost:3000/tournament/" + tournament_id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

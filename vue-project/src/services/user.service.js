@@ -1,5 +1,5 @@
 const createUser = (data) => {
-    return fetch("http://localhost:3333/user", {
+    return fetch("http://localhost:3000/user", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -23,7 +23,7 @@ const createUser = (data) => {
 }
 
 const getOneUser = (user_id) => {
-    return fetch("http://localhost:3333/user/" + user_id)
+    return fetch("http://localhost:3000/user/" + user_id)
     .then((response) => {
         if(response.status === 200){
             return response.json();
@@ -41,7 +41,7 @@ const getOneUser = (user_id) => {
 }
 
 const getAllUsers = () => {
-    return fetch("http://localhost:3333/user", {
+    return fetch("http://localhost:3000/user", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const getAllUsers = () => {
 }
 
 const updateUser = (user_id, data) => {
-    return fetch("http://localhost:3333/user/" + user_id, {
+    return fetch("http://localhost:3000/user/" + user_id, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const updateUser = (user_id, data) => {
 }
 
 const login = (data) => {
-    return fetch("http://localhost:3333/login", {
+    return fetch("http://localhost:3000/login", {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -114,7 +114,7 @@ const login = (data) => {
 }
 
 const logout = () => {
-    return fetch("http://localhost:3333/logout", {
+    return fetch("http://localhost:3000/logout", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

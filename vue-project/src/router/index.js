@@ -7,7 +7,7 @@ import Tournament from "../views/pages/Tournament.vue"
 const routes = [
     { path: "/", component: Home },
     { path: "/login", component: Login },
-    { path: "/tournament/:id", component: Article},
+    { path: "/tournament/:id", component: Tournament},
 
 ]
 

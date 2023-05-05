@@ -1,7 +1,7 @@
 <template>
     <h1>{{ tournament.name }}</h1> 
-    <h2>{{ "Game: " + tournament.game }}</h2>
-    <h3>{{ "Host: " + tournament.host }}</h3>
+    <h2>{{ "Game: " + tournament.tournament_game }}</h2>
+    <h3>{{ "Host: " + tournament.tournament_host }}</h3>
     <br />
 
 
@@ -23,12 +23,13 @@
         <li v-for="match in matches" :key="match.match_id">
             <div class="match-container">
                 <div class="score_1">
-                    {{ match.participant_score }}
+                    {{"Player 1: " + match.participant_score }}
                 </div>
                 <div class="score_2">
-                    {{ match.competitor_score }}
+                    {{"Player 2: "  + match.competitor_score }}
                 </div>
             </div>
+            <br />
         </li>
     </ul>
 </template>
@@ -46,7 +47,9 @@
                 error: "",
                 newText: "",
                 score_1: 0,
-                score_2: 0
+                score_2: 0,
+                match_no: 1,
+                id: this.$route.params.id
             }
         },
         created() {
@@ -54,7 +57,7 @@
             tournamentService.getOneTournament(this.$route.params.id)
             .then((tournament) => {
                 this.tournament = tournament;
-                matchservice.getAll(this.$route.params.id)
+                matchService.getAllMatches(this.$route.params.id)
                 .then((matches) => {
                     this.matches = matches
                     this.num_matches = matches.length
@@ -65,26 +68,33 @@
         },
         methods: {
             handleSubmit(e){
-                const {score_1, score_2} = this
+                const {match_no, id, score_1, score_2} = this
 
-                if(!(match_text)){
-                    this.error = "match box can't be empty"
-                    return;
-                }
+                
 
                 const data = {
-                    "match_no": 1,
-                    "tournament_id": this.$route.params.id
+                    "match_no": match_no,
+                    "tournament_id": id
                 };
 
-                matchService.createMatch(this.$route.params.id, data)
+                const data2 = {
+                    "participant_score": score_1,
+                    "competitor_score": score_2
+                }
+
+                matchService.createMatch(data)
                 .then(response => {
-                    matchservice.getAll(this.$route.params.id)
-                    .then((matches) => {
-                        this.matches = matches
-                        this.num_matches = matches.length
-                    })
+                    console.log(response.match_id);
+                    matchService.updateMatch(response.match_id, data2)
+                    .then(response => {
+                        matchService.getAllMatches(this.$route.params.id)
+                        .then((matches) => {
+                            this.matches = matches
+                            this.num_matches = matches.length
+                        })
                     .catch(error => this.error = error);
+                    })
+                   
                 })
                 .catch(error => this.error = error)
 
