@@ -3,7 +3,6 @@ const createUser = (data) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         },
         body: JSON.stringify(data)
     })
@@ -46,7 +45,6 @@ const getAllUsers = () => {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         }
     })
     .then((response) => {
@@ -70,7 +68,6 @@ const updateUser = (user_id, data) => {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         },
         body: JSON.stringify(data)
     })
@@ -109,8 +106,6 @@ const login = (data) => {
         }
     })
     .then((resJson) => {
-        localStorage.setItem("user_id", resJson.user_id);
-        localStorage.setItem("session_token", resJson.session_token)
         return resJson
     })
     .catch((error) => {
@@ -123,13 +118,10 @@ const logout = () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         }
     })
     .then((response) => {
         if(response.status === 200){
-            localStorage.removeItem("user_id")
-            localStorage.removeItem("session_token")
             return
         }else if(response.status === 401){
             throw "Not logged in"

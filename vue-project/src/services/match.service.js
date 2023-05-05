@@ -1,9 +1,8 @@
 const createMatch = (data) => {
-    return fetch("http://localhost:3333/match", {
+    return fetch("http://localhost:3000/match", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         },
         body: JSON.stringify(data)
     })
@@ -28,7 +27,6 @@ const updateMatch = (match_id, data) => {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         },
         body: JSON.stringify(data)
     })
@@ -84,7 +82,7 @@ const getOneMatch = (match_id) => {
     })
 }
 
-export const articleService = {
+export const matchService = {
     createMatch,
     updateMatch,
     getAllMatches,

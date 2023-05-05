@@ -3,7 +3,6 @@ const createTournament = (data) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         },
         body: JSON.stringify(data)
     })
@@ -66,7 +65,6 @@ const updateTournament = (tournament_id, data) => {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         },
         body: JSON.stringify(data)
     })
@@ -91,7 +89,6 @@ const deleteTournament = (tournament_id) => {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "X-Authorization": localStorage.getItem("session_token")
         }
     })
     .then((response) => {
