@@ -8,7 +8,6 @@ module.exports = function(app){
     
     app.route("/tournament/:tournament_id")
         .patch(tournaments.updateTournament) //Update Tournament (Add New Match?)
-        .delete(tournaments.deleteTournament) //Delete Tournament
         .get(tournaments.getOne) //get One tournament     
 
 } 

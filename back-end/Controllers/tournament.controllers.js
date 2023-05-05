@@ -14,10 +14,10 @@ const getAll = (req,res) => {
 const addNew = (req, res) => {
     const schema = Joi.object({
         "tournament_name": Joi.string().required(),
-        "tournament_game": Joi.string().required,
+        "tournament_game": Joi.string().required(),
         "tournament_host": Joi.string().required(),
         "player_id": Joi.number().required(),
-        "user_id": Joi.number.required()
+        "user_id": Joi.number().required()
     })
 
     const { error } = schema.validate(req.body);
@@ -42,21 +42,10 @@ const getOne = (req, res) => {
     })
 }
 
-const deleteTournament = (req,res) => {
-    let tournament_id = parseInt(req.params.tournament_id) 
-    
-    tournaments.deleteTournament(tournament_id, (err,id) => {
-        if(err) {
-            console.log(err)
-            return res.sendStatus(500)
-        }
-        return res.sendStatus(200)
-    })
-}
 
 const updateTournament = (req,res) => {
     let tournament_id = parseInt(req.params.tournament_id) 
-
+    let tournament = [];
     const schema = Joi.object({
         "tournament_name": Joi.string(),
         "tournament_game": Joi.string(),
@@ -73,7 +62,7 @@ const updateTournament = (req,res) => {
     }
 
     if (req.body.hasOwnProperty("tournament_game")){
-        tournament.tournament_game = req.body.tournament_name
+        tournament.tournament_game = req.body.tournament_game
     }
 
     if (req.body.hasOwnProperty("tournament_host")){
@@ -105,5 +94,5 @@ module.exports = {
     getOne: getOne,
     addNew: addNew,
     updateTournament: updateTournament,
-    deleteTournament: deleteTournament
+    
 }

@@ -24,8 +24,8 @@ const getOne = (req,res) => {
 
 const addNew = (req,res) => {
     const schema = Joi.object({
-        "match_no": Joi.number.required(),
-        "round_id": Joi.number.required()
+        "match_no": Joi.number().required(),
+        "tournament_id": Joi.number().required()
     })
 
     const { error } = schema.validate(req.body);
@@ -33,6 +33,7 @@ const addNew = (req,res) => {
 
     let match = Object.assign({}, req.body);
     matches.addNew(match, (err, id) => {
+        console.log(err);
         if(err) return res.sendStatus(500) //Fails
 
         return res.status(201).send({match_id: id}) //Success
@@ -41,6 +42,7 @@ const addNew = (req,res) => {
 
 const updateMatch = (req,res) => {
     let match_id = parseInt(req.params.match_id); //Gets Match ID
+    let match = [];
     matches.getOne(match_id, (err,result) => {     //Checks Match Exists before Updating
         if(err === 404) return res.sendStatus(404)
         if(err) return res.sendStatus(500);
