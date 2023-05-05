@@ -3,10 +3,12 @@ const Joi = require("joi");
 
 
 const getAll = (req,res) => {
-   matches.getAll((err,num_rows,results) => {
-    if(err) return res.sendStatus(500);
+    let tournament_id = parseInt(req.params.tournament_id)
 
-    return res.status(200).send(results)
+    matches.getAll(tournament_id, (err,num_rows,results) => {
+        if(err) return res.sendStatus(500);
+
+        return res.status(200).send(results)
    })
 }
 
@@ -48,9 +50,9 @@ const updateMatch = (req,res) => {
         if(err) return res.sendStatus(500);
 
         const schema = Joi.object({
-            "participant_score": Joi.number(),
-            "competitor_score": Joi.number(),
-            "winner_name": Joi.string()
+            "participant_score": Joi.number().required(),
+            "competitor_score": Joi.number().required(),
+            "winner_name": Joi.string().required()
         })
 
         const { error } = schema.validate(req.body);
@@ -62,7 +64,7 @@ const updateMatch = (req,res) => {
         }
 
         if (req.body.hasOwnProperty("competitor_score")) {
-            match.competitor_score = req.body.participant_score
+            match.competitor_score = req.body.competitor_score
         }
 
         if (req.body.hasOwnProperty("winner_name")) {
