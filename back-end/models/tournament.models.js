@@ -53,16 +53,10 @@ const getAll = (done) => {
     )
 }
 
-const deleteTournament = (id, done) => {
-    const sql = "DELETE * FROM tournaments WHERE tournament_id = ?"
 
-    db.run(sql, [id], (err) => {  //Executes SQL query
-        return done(err)
-    })
-}
 
 const updateTournament = (id, tournament, done) => {
-    const sql = "UPDATE tournament SET tournament_name=?, tournament_game=?, tournament_host=?, player_id=?, user_id=? WHERE tournament_id=?"
+    const sql = "UPDATE tournaments SET tournament_name=?, tournament_game=?, tournament_host=?, player_id=?, user_id=? WHERE tournament_id=?"
     let values = [tournament.tournament_name,tournament.tournament_game,tournament.tournament_host, tournament.player_id,tournament.user_id, id];
 
     db.run(sql,values, (err) => {
@@ -77,6 +71,6 @@ module.exports = {
     getAll: getAll,
     addNew: addNew,
     getOne: getOne,
-    deleteTournament: deleteTournament,
+    
     updateTournament: updateTournament
 }

@@ -2,11 +2,11 @@ const db = require("../database.js");
 
 
 const addNew = (match,done) => {
-    const sql = "INSERT into match (match_no,participant_score,competitor_score,round_id) VALUES (?,?,?,?)"
-    let values = [match.match_no,0,0,match.round_id]
+    const sql = "INSERT into match (match_no,participant_score,competitor_score,tournament_id) VALUES (?,?,?,?)"
+    let values = [match.match_no,0,0,match.tournament_id]
     
     
-    db.run(sql, values, function(err) {  //executes SQL query
+    db.run(sql,values, function(err) {  //executes SQL query
         if(err) return done(err)
 
         return done(null,this.lastID); //returns match id - success
