@@ -1,5 +1,5 @@
 const createUser = (data) => {
-    return fetch("http://localhost:3333/users", {
+    return fetch("http://localhost:3333/user", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -23,7 +23,7 @@ const createUser = (data) => {
 }
 
 const getOneUser = (user_id) => {
-    return fetch("http://localhost:3333/users/" + user_id)
+    return fetch("http://localhost:3333/user/" + user_id)
     .then((response) => {
         if(response.status === 200){
             return response.json();
@@ -41,7 +41,7 @@ const getOneUser = (user_id) => {
 }
 
 const getAllUsers = () => {
-    return fetch("http://localhost:3333/users", {
+    return fetch("http://localhost:3333/user", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

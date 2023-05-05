@@ -47,7 +47,7 @@ const updateMatch = (match_id, data) => {
 }
 
 const getAllMatches = (tournament_id) => {
-    return fetch("http://localhost:3333/tournament/" + tournament_id + "/comments")
+    return fetch("http://localhost:3333/matchlist/" + tournament_id)
     .then((response) => {
         if(response.status === 200){
             return response.json();

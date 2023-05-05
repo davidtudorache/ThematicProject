@@ -19,8 +19,4 @@ module.exports = function(app){
 
     app.route("/logout")
         .post(users.logout); //logout
-
-    app.route("/player")
-        .post() //creates player
-
 }
