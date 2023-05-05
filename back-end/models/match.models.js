@@ -17,19 +17,22 @@ const addNew = (match,done) => {
 
 const getAll = (id, done) => {              //Gets All from ONE tournament 
     const sql = "SELECT * FROM match WHERE tournament_id = ?"
-
-        db.get(sql,[id], (err,row) => {
+    const results = []; 
+        db.each(sql,[id], (err,row) => {
             if(err) return done(err)
             if(!row) return done(404)
 
 
-            return done(null, {
+            results.push({
                 match_id: row.match_id,
                 match_no: row.match_no,
-                participant_score: row.match_no,
+                participant_score: row.participant_score,
                 competitor_score: row.competitor_score,
                 winner_name: row.winner_name
             })
+        },
+        (err, num_rows) => {
+            return done(err,num_rows,results)
         })
 }
 
@@ -43,8 +46,9 @@ const getOne = (id, done) => {
 
 
             return done(null, {
+                tournament_id: row.tournament_id,
                 match_no: row.match_no,
-                participant_score: row.match_no,
+                participant_score: row.participant_score,
                 competitor_score: row.competitor_score,
                 winner_name: row.winner_name
             })
@@ -52,7 +56,7 @@ const getOne = (id, done) => {
 }
 
 const updateMatch = (id,match, done) => {
-    const sql = "UPDATE users SET participant_score=?, competitor_score=?, winner_name=? WHERE match_id = ?"
+    const sql = "UPDATE match SET participant_score=?, competitor_score=?, winner_name=? WHERE match_id = ?"
     let values = [match.participant_score,match.competitor_score,match.winner_name,id];
 
     db.run(sql,values, (err) => {
